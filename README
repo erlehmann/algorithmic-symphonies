@@ -1,0 +1,9 @@
+This is a collection of minimal programs for sound synthesis, written in C. They are using techniques explained in <http://countercomplex.blogspot.com/2011/10/algorithmic-symphonies-from-one-line-of.html> and the followup discussions at <http://news.ycombinator.com/item?id=3063359> and <http://www.reddit.com/r/programming/comments/kyj77/algorithmic_symphonies_from_one_line_of_code_how/
+>.
+
+To compile the demo program and listen to its output, do:
+    g++ ./munching-squares.c -o munching-squares
+    ./munching-squares | sox -r 8000 -U -t u8 - -d
+
+To play any formula:
+    ./play $FILENAME

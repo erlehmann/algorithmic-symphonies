@@ -1,0 +1,25 @@
+#!/bin/sh
+cat << EOF > $1.c
+#include <math.h>
+#include <stdio.h>
+main() {
+  long int t;
+  int sample;
+  for(t=0;;t++) {
+    sample = (
+EOF
+cat $1 >> $1.c
+cat << EOF >> $1.c
+    );
+    /*fprintf(stderr, "%5d ", sample);*/
+    fputc(sample, stdout);
+  }
+}
+EOF
+
+g++ $1.c -o audio && \
+    ./audio | \
+    sox -r 8000 -c 1 -t u8 - -t s16 - | \
+    sox -r 8000 -c 1 -t s16 - -d
+
+#./audio | head -c128b > testfile
