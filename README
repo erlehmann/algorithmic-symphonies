@@ -5,5 +5,5 @@ To compile the demo program and listen to its output, do:
     g++ ./munching-squares.c -o munching-squares
     ./munching-squares | sox -r 8000 -U -t u8 - -d
 
-To play any formula:
+To generate a C program for any formula and play it immediately:
     ./play $FILENAME
