@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<title>Algorithmic Symphonies</title>
+
+<style>
+* {
+    border: none;
+    background-color: inherit;
+    color: inherit;
+    font: inherit;
+    font-size: 100%;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    vertical-align: baseline;
+}
+
+[title] {
+    border-bottom: 1px dotted;
+}
+
+html {
+    font-family: "Droid Sans", sans-serif;
+}
+
+body {
+    /*color: #2e3436;
+    background-color: #ffffff;*/
+    border: 0.25em double #2e3436;
+    margin: 3em auto;
+    padding: 9em 3em 3em;
+    position: relative;
+    width: 33em;  /* <http://webtypography.net/Rhythm_and_Proportion/Horizontal_Motion/2.1.2/> */
+}
+
+body::before,
+body::after {
+    display: block;
+    font-size: 3em;
+    height: 1.5em;
+    overflow: hidden;
+    position: absolute;
+    top: 1em;
+    width: 11em;
+}
+
+body::before {
+    text-align: right;
+    content: "𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚";
+}
+
+body::after {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAABCAYAAAAxWXB3AAAAAXNSR0IArs4c6QAAADdJREFUOMvt00ENACAMBMGtATThjJzAmil/Dg08SfoYCRO2D+DW2ieqYIynt0my2Z7MI8FaGCkupysHEkVP6dUAAAAASUVORK5CYII=");
+    background-size: 100%;
+    content: "𝚝&(𝚝≫𝟾) ➟ 𝄞♭ 𝅘𝅥♫𝅘𝅥𝅮 𝄀 𝅘𝅥♫𝅘𝅥𝅮 𝄂"; /*t&(t>>8)  ｔ＆（ｔ＞＞８）*/
+    font-family: monospace;
+}
+
+h1,
+blockquote :first-child::before,
+blockquote :last-child::after {
+    font-size: 3em;
+    line-height: 1;
+}
+
+h2,
+section > h1 {
+    font-size: 2em;
+    line-height: 0.75;
+    margin: 0.75em 0;
+}
+
+h3,
+section > section > h1
+{
+    font-size: 1.5em;
+    line-height: 1;
+    margin: 1em 0;
+}
+
+p {
+    margin-top: 1.5em;
+}
+
+p + p {
+    text-indent: 1.5em;
+}
+
+blockquote {
+    padding: 0 1.5em;
+    position: relative;
+}
+
+blockquote :first-child::before {
+    content: '„';
+    left: 0;
+    bottom: 0;
+}
+
+blockquote :last-child::after {
+    content: '“';
+    right: 0;
+    top: 0;
+}
+
+blockquote :first-child::before,
+blockquote :last-child::after {
+    display: block;
+    position: absolute;
+}
+
+a {
+    border-bottom: 1px solid;
+}
+
+a:link {
+    color: #204a87;
+    background-color: #ffffff;
+}
+
+a:hover {
+    color: #ffffff;
+    background-color: #3465a4;
+    outline: 1px solid #3465a4;
+}
+
+a:visited {
+    color: #5c3566;
+    background-color: #ffffff;
+}
+
+a:visited:hover {
+    color: #ffffff;
+    background-color: #75507b;
+    outline: 1px solid #75507b;
+}
+
+a:focus {
+    outline: 2px solid #f57900;
+}
+
+a:active {
+    color: #ce5c00;
+    background-color: #ffffff;
+    outline: none;
+}
+
+i {
+    font-style: italic;
+}
+
+strong {
+    font-weight: bold;
+}
+
+hr {
+    border: 0.125em solid #2e3436;
+    display: block;
+    height: 0.25em;
+    margin-top: 1.25em;
+}
+</style>
+
+<hgroup>
+    <h1>Algorithmic Symphonies</h1>
+    <h2>Creating Music with a C Compiler</h2>
+</hgroup>
+
+<p>
+    The contemporary approach to creating music with a digital computer often involves a <a href="http://en.wikipedia.org/wiki/Software_synthesizer"><i>software synthesizer</i></a> – a program able to generate sound waves with distinct characteristics. To combine sounds, one can use <a href="http://en.wikipedia.org/wiki/Music_sequencer"><i>sequencer</i></a> or <a href="http://en.wikipedia.org/wiki/Tracker_(music_software)"><i>tracker</i></a> software able to process musical notation, yielding audio output utilizing the given samples.
+</p>
+<p>
+    Such applications' interfaces are diverse and indicative of their workflow: While <a href="http://en.wikipedia.org/wiki/Reaktor"><i>Reaktor</i></a> can both imitate the layout of a traditional physical audio workstation and enable you to edit directed graphs for sound synthesis (<a href="http://express.native-instruments.de/uploads/pics/Customize_or_Construct_Bausteine_4-5-5_CLICK-ENLARGE.png">screenshot</a>), creating a musical score in <a href="http://schismtracker.org/wiki/Schism%20Tracker"><i>Schism Tracker</i></a> is similar to editing with a hex editor (<a href="http://en.wikipedia.org/wiki/File:Schism-beyond.gif">screenshot</a>).
+</p>
+<p>
+    Digital audio production, however, is not limited to manual composition; music can also be generated. Employing specialized programming languages, mature applications like <a href="http://en.wikipedia.org/wiki/Csound"><i>Csound</i></a> or <a href="http://en.wikipedia.org/wiki/SuperCollider"><i>SuperCollider</i></a> deliver complex abstract working environments for this domain (<a href="http://en.wikipedia.org/wiki/File:SuperCollider_screenshot3.jpg">screenshot</a>).
+</p>
+<p>
+    While those specialized applications are certainly useful, they are not strictly necessary for audio synthesis and composition. In particular, it has been demonstrated that <a href="http://en.wikipedia.org/wiki/Chiptune">8bit music</a> can be obtained from <a href="http://countercomplex.blogspot.com/2011/10/algorithmic-symphonies-from-one-line-of.html">short programs written in the <i>C</i> programming language</a>, by interpreting their output as a description of a waveform.
+</p>
+
+<hr>
+
+<p>
+    […]
+</p>
+
+<p>
+    […] Through use of bitwise logical operators, those primitives can be combined and rearranged, effecting each other in several different ways.
+</p>
