@@ -79,7 +79,9 @@ section > section > h1
     margin: 1em 0;
 }
 
-p {
+p,
+code {
+    display: block;
     margin-top: 1.5em;
 }
 
@@ -87,7 +89,18 @@ p + p {
     text-indent: 1.5em;
 }
 
-blockquote {
+p code {
+    display: inline;
+    margin-top: 0;
+}
+
+code,
+var {
+    font-family: "Droid Sans Mono", monospace;
+    white-space: pre-wrap;
+}
+
+blockquote, figure {
     padding: 0 1.5em;
     position: relative;
 }
