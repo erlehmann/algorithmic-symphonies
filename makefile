@@ -18,38 +18,46 @@ DURATION=30
 CC=gcc
 TARGET=4-512-s-11-63
 
-# WAVHEADER created from the following python code:
-#
-# duration = 0
-# channels = 1
-# bps = 8
-# sample = 8000
-# ExtraParamSize = 0
-# Subchunk1Size = 16+2+ExtraParamSize
-# Subchunk2Size = duration*sample*channels*bps/8
-# ChunkSize = 4 + (8 + Subchunk1Size) + (8 + Subchunk2Size)
-#
-# stdout.write("".join([
-#     'RIFF',                                # ChunkID (magic)      # 0x00
-#     pack('<I', ChunkSize),                 # ChunkSize            # 0x04
-#     'WAVE',                                # Format               # 0x08
-#     'fmt ',                                # Subchunk1ID          # 0x0c
-#     pack('<I', Subchunk1Size),             # Subchunk1Size        # 0x10
-#     pack('<H', 1),                         # AudioFormat (1=PCM)  # 0x14
-#     pack('<H', channels),                  # NumChannels          # 0x16
-#     pack('<I', sample),                    # SampleRate           # 0x18
-#     pack('<I', bps/8 * channels * sample), # ByteRate             # 0x1c
-#     pack('<H', bps/8 * channels),          # BlockAlign           # 0x20
-#     pack('<H', bps),                       # BitsPerSample        # 0x22
-#     pack('<H', ExtraParamSize),            # ExtraParamSize       # 0x22
-#     'data',                                # Subchunk2ID          # 0x24
-#     pack('<I', Subchunk2Size)              # Subchunk2Size        # 0x28
-# ]))
+# convenience macros to create the RIFF header
 
-WAVHEADER="\
-0000000: 5249 4646 a638 0100 5741 5645 666d 7420 \n\
-0000010: 1200 0000 0100 0100 401f 0000 401f 0000 \n\
-0000020: 0100 0800 0000 6461 7461 0000 0000 "
+define pack_int
+	printf "%08X\n" $1 | sed 's/\([0-9A-F]\{2\}\)\([0-9A-F]\{2\}\)\([0-9A-F]\{2\}\)\([0-9A-F]\{2\}\)/\\\\\\x\4\\\\\\x\3\\\\\\x\2\\\\\\x\1/I' | xargs printf >> $2
+endef
+
+define pack_short
+	printf "%04X\n" $1 | sed 's/\([0-9A-F]\{2\}\)\([0-9A-F]\{2\}\)/\\\\\\x\2\\\\\\x\1/I' | xargs printf >> $2
+endef
+
+define calculate
+	$(shell echo $$(($1)))
+endef
+
+define riffhead
+	echo -n RIFF > $1
+	$(call pack_int, $(ChunkSize), $1)
+	echo -n "WAVEfmt " >> $1
+	$(call pack_int, $(Subchunk1Size), $1)
+	$(call pack_short, 1, $1)
+	$(call pack_short, $(channels), $1)
+	$(call pack_int, $(sample), $1)
+	$(call pack_int, $(call calculate, $(bps)/8 * $(channels) * $(sample)), $1)
+	$(call pack_short, $(call calculate, $(bps)/8 * $(channels)), $1)
+	$(call pack_short, $(bps), $1)
+	$(call pack_short, 0, $1)
+	echo -n data >> $1
+	$(call pack_int, $(Subchunk2Size), $1)
+endef
+
+# variables defining the RIFF header information
+
+channels=1
+bps=8
+sample=8000
+Subchunk1Size=18
+Subchunk2Size=$(call calculate, $(DURATION)*$(sample)*$(channels)*$(bps)/8)
+ChunkSize=$(call calculate, $((20 + $(Subchunk1Size) + $(Subchunk2Size))))
+
+# C header and footer snippets
 
 C_HEADER="\
 \#include <math.h>\n\
@@ -59,7 +67,7 @@ main() {long int t;for(t=0;;t++) {fputc((int)("
 C_FOOTER="), stdout);}}"
 
 play: ${TARGET}.a
-	./$< | head -c $$((${DURATION}*8000)) | aplay -r 8000 -f U8
+	./$< | head -c $(Subchunk2Size) | aplay -r 8000 -f U8
 	rm $<
 
 %.c:
@@ -71,6 +79,5 @@ play: ${TARGET}.a
 	${CC} -lm $< -o $@
 
 %.wav: %.a
-	echo ${WAVHEADER} | xxd -r - $@
-	./$< | head -c $$((${DURATION}*8000)) >> $@
-	printf "%08X\n" $$((${DURATION}*8000)) | sed 's/\(..\)\(..\)\(..\)\(..\)/000002A \4\3 \2\1/' | xxd -r - $@
+	$(call riffhead, $@)
+	./$< | head -c $(Subchunk2Size) >> $@
