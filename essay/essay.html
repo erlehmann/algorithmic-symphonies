@@ -196,12 +196,29 @@ hr {
 <hr>
 
 <p>
-    The standard method to convert analog waveforms such as audio into digital data is <a href="http://en.wikipedia.org/wiki/Pulse-code_modulation">pulse-code modulation</a> (<abbr title="Pulse-Code Modulation">PCM</abbr>), basically storing the magnitude of a given signal at regular intervals. To interpret the results, that procedure is applied in reverse and the output filtered for artifacts.
+    The standard method to convert analog waveforms such as audio into digital data is <a href="http://en.wikipedia.org/wiki/Pulse-code_modulation">pulse-code modulation</a> (<abbr title="Pulse-Code Modulation">PCM</abbr>), basically storing the magnitude of a given signal at regular intervals. To interpret <abbr title="Pulse-Code Modulation">PCM</abbr> data, the procedure is applied in reverse, with the output filtered for artifacts.
 </p>
 
 <p>
-    With <abbr title="Pulse-Code Modulation">PCM</abbr>, the two main factors affecting audio quality are bit depth and sampling frequency: How many bits of information are available for storing the signal magnitude directly effects <a href="http://en.wikipedia.org/wiki/Dynamic_range#Audio">dynamic range</a>; how often the signal is sampled dictates the <a href="http://en.wikipedia.org/wiki/Sampling_rate#Sampling_theorem">maximum frequency that can be stored</a>.
+    With <abbr title="Pulse-Code Modulation">PCM</abbr>, the two main factors affecting audio quality are bit depth and sampling frequency: How many bits of information are available for storing signal magnitude directly effects <a href="http://en.wikipedia.org/wiki/Dynamic_range#Audio">dynamic range</a>; how often the signal is sampled dictates the <a href="http://en.wikipedia.org/wiki/Sampling_rate#Sampling_theorem">maximum frequency that can be stored</a>.
 </p>
+
+<p>
+    Consider the output of the following <i>C</i> program, interpreted with a bit depth of 8 and a sampling frequency of 8 kHz:
+</p>
+
+<code>#include &lt;stdio.h&gt;
+main() {
+int t;
+for(t=0;;t++)
+    putchar(t);
+}</code>
+
+<p>
+    As <var>t</var> increases, its last 8 bits are written to <i>stdout</i> by the <a href="http://linux.die.net/man/3/putchar"><code>putchar()</code></a> function. After the output reaches 255, it starts again at zero; the repeated output of this stream of rising numbers yields a <a href="http://en.wikipedia.org/wiki/Sawtooth_wave">sawtooth wave</a>. Its frequency can be determined by dividing the sampling frequency (8000 Hz) through the wave period (2⁸ = 256) and is therefore 31.25 Hz.
+</p>
+
+<hr>
 
 <p>
     […] Through use of bitwise logical operators, those primitives can be combined and rearranged, effecting each other in several different ways.
