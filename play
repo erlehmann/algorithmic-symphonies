@@ -11,7 +11,7 @@ EOF
 cat $1 >> $1.c
 cat << EOF >> $1.c
     );
-    fprintf(stderr, "%4d ", sample%0xff);
+    fprintf(stderr, "%4d ", sample&0xff);
     fputc(sample, stdout);
   }
 }
