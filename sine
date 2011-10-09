@@ -1,0 +1,1 @@
+0xff*(sin(t*2*M_PI/0xff)+1)/2
