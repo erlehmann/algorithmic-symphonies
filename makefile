@@ -84,3 +84,6 @@ play: ${TARGET}.a
 
 %.oga: %.wav
 	oggenc $< -o $@
+
+%.mp3: %.wav
+	lame $< $@ -b 16
