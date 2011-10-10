@@ -81,3 +81,6 @@ play: ${TARGET}.a
 %.wav: %.a
 	$(call riffhead, $@)
 	./$< | head -c $(Subchunk2Size) >> $@
+
+%.oga: %.wav
+	oggenc $< -o $@
