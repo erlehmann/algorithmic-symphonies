@@ -11,15 +11,14 @@ EOF
 cat $1 >> $1.c
 cat << EOF >> $1.c
     );
-    fprintf(stderr, "%4d ", sample&0xff);
     fputc(sample, stdout);
   }
 }
 EOF
 
-g++ $1.c -o audio && \
-    ./audio | \
-    sox -r 8000 -c 1 -t u8 - -t s16 - | \
-    sox -r 8000 -c 1 -t s16 - -d
+mkfifo /tmp/pipe1 /tmp/pipe2 2>/dev/null
 
-#./audio | head -c128b > testfile
+hexdump -Cv < /tmp/pipe1 &
+cat /tmp/pipe2 | aplay -r 8000 -f U8 2>/dev/null &
+
+g++ $1.c -o /tmp/audio && /tmp/audio | pv -qL 8000 | tee /tmp/pipe1 > /tmp/pipe2
