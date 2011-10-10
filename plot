@@ -18,8 +18,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from __future__ import division
-
 from sys import argv, stderr, stdout, exit
 
 import math
@@ -28,11 +26,9 @@ from PIL import Image
 try:
     filename = argv[1]
 except IndexError:
-    stderr.write('This program plots the function in the given file \
-to a PNG file.\n\n')
-    stderr.write('Usage: plot.py infile [width] [height]\n\n\
-If width is omitted, it is set to 1024.\n\
-If height is omitted, it is set to 256.')
+    stderr.write('This program plots the function in the given file.\n\n')
+    stderr.write('Usage: plot.py infile [width]\n\n\
+If width is omitted, it is set to 1024.\n')
     exit()
 
 try:
@@ -50,15 +46,8 @@ except ValueError:
     stderr.write('“%s” is not a width that can be interpreted in pixels.\n' % argv[2])
     exit(1)
 
-try:
-    height = int(argv[3])
-except IndexError:
-    height = 256
-except ValueError:
-    stderr.write('“%s” is not a height that can be interpreted in pixels.\n' % argv[3])
-    exit(1)
-
-size = (width, height+1)
+height = 256
+size = (width, height)
 img = Image.new('1', size, 255)
 
 for t in range(width):
@@ -72,7 +61,7 @@ for t in range(width):
         })
     )&0xff
 
-    coord = (t, int(height - sample*(height/256)))
+    coord = (t, height - sample - 1)
     img.putpixel(coord, 0)
 
     t += 1
