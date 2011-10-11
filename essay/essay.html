@@ -225,16 +225,38 @@ hr {
     Consider the output of the following <i>C</i> program, interpreted with a bit depth of 8 and a sampling frequency of 8 kHz:
 </p>
 
+<figure>
 <code>#include &lt;stdio.h&gt;
 main() {
 int t;
 for(t=0;;t++)
     putchar(t);
 }</code>
+    <figcaption>
+        A simple <i>C</i> program.
+    </figcaption>
+</figure>
 
 <p>
-    As <var>t</var> increases, its last 8 bits are written to <i>stdout</i> by the <a href="http://linux.die.net/man/3/putchar"><code>putchar()</code></a> function. After the output reaches 255, it starts again at zero; the repeated output of this stream of rising numbers yields a <a href="http://en.wikipedia.org/wiki/Sawtooth_wave">sawtooth wave</a>. Its frequency can be determined by dividing the sampling frequency (8000 Hz) through the wave period (2⁸ = 256) and is therefore 31.25 Hz.
+    The program continuously increments <var>t</var>; the last 8 bits of <var>t</var> are output by the <a href="http://linux.die.net/man/3/putchar"><code>putchar()</code></a> function, rising to <code title="decimal 255">0xff</code>, then starting again at <code title="decimal 0">0x00</code>. This stream of repeatedly rising numbers yields a <a href="http://en.wikipedia.org/wiki/Sawtooth_wave">sawtooth wave</a>. Its frequency can be determined by dividing the sampling frequency (8000 Hz) through the wave period (2⁸ = 256); at 31.25 Hz, the tone is at the lower end of the human hearing range.
 </p>
+
+<figure id="sawtooth-graph">
+    <img src="sawtooth.svg">
+    <figcaption>
+        Sawtooth wave (31.25 Hz, ⅛ s).
+    </figcaption>
+</figure>
+
+<figure id="sawtooth-audio">
+    <audio controls>
+        <source src="sawtooth.oga">
+        <source src="sawtooth.mp3">
+    </audio>
+    <figcaption>
+        Sawtooth wave (31.25 Hz, 5 s).
+    </figcaption>
+</figure>
 
 <hr>
 
