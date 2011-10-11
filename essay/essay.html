@@ -80,7 +80,8 @@ section > section > h1
 }
 
 p,
-code {
+figure,
+figcaption {
     display: block;
     margin-top: 1.5em;
 }
@@ -100,7 +101,23 @@ var {
     white-space: pre-wrap;
 }
 
-blockquote, figure {
+figure {
+    counter-increment: figure;
+    overflow-x: hidden;
+}
+
+figure :first-child {
+    width: 100%;
+}
+
+figcaption::before {
+    content: 'Figure ' counter(figure, decimal) ':';
+    display: inline-block;
+    font-weight: bold;
+}
+
+blockquote,
+figcaption {
     padding: 0 1.5em;
     position: relative;
 }
