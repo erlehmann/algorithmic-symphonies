@@ -1,5 +1,5 @@
 #!/bin/sh
-cat << EOF > $1.c
+cat << EOF > /tmp/audio.c
 #include <math.h>
 #include <stdio.h>
 main() {
@@ -8,8 +8,8 @@ main() {
   for(t=0;;t++) {
     sample = (
 EOF
-cat $1 >> $1.c
-cat << EOF >> $1.c
+cat $1 >> /tmp/audio.c
+cat << EOF >> /tmp/audio.c
     );
     fputc(sample, stdout);
   }
@@ -21,4 +21,4 @@ mkfifo /tmp/pipe1 /tmp/pipe2 2>/dev/null
 hexdump -Cv < /tmp/pipe1 &
 cat /tmp/pipe2 | aplay -r 8000 -f U8 2>/dev/null &
 
-g++ $1.c -o /tmp/audio && /tmp/audio | pv -qL 8000 | tee /tmp/pipe1 > /tmp/pipe2
+g++ /tmp/audio.c -o /tmp/audio && /tmp/audio | pv -qL 8000 | tee /tmp/pipe1 > /tmp/pipe2
