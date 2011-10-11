@@ -21,4 +21,4 @@ mkfifo /tmp/pipe1 /tmp/pipe2 2>/dev/null
 hexdump -Cv < /tmp/pipe1 &
 cat /tmp/pipe2 | aplay -r 8000 -f U8 2>/dev/null &
 
-gcc /tmp/audio.c -o /tmp/audio && /tmp/audio | pv -qL 8000 | tee /tmp/pipe1 > /tmp/pipe2
+gcc -lm /tmp/audio.c -o /tmp/audio && /tmp/audio | pv -qL 8000 | tee /tmp/pipe1 > /tmp/pipe2
