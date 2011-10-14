@@ -83,7 +83,7 @@ play: ${TARGET}.a
 	./$< | head -c $(Subchunk2Size) >> $@
 
 %.oga: %.wav
-	oggenc $< -o $@ -b 20
+	oggenc $< -o $@ -b 32
 
 %.mp3: %.wav
 	lame $< $@ -q 0 -b 32
