@@ -3,7 +3,7 @@ This is a collection of minimal programs for sound synthesis, written in C. They
 
 To compile the demo program and listen to its output, do:
     g++ ./munching-squares.c -o munching-squares
-    ./munching-squares | sox -r 8000 -U -t u8 - -d
+    ./munching-squares | sox -c 1 -e unsigned-integer -r 8000 -t u8 - -d --buffer 32
 
 To generate a C program for any formula and play it immediately:
     ./play $FILENAME
